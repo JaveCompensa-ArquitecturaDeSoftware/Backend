@@ -1,0 +1,67 @@
+services:
+  dbsedes:
+    build:
+      context: ./dbs
+      dockerfile: dbsedes.dockerfile
+    volumes:
+      - ./dbs/base_sedes:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sedes
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33000:3306"
+  dbeventos:
+    build:
+      context: ./dbs
+      dockerfile: dbeventos.dockerfile
+    volumes:
+      - ./dbs/base_eventos:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eventos
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33001:3306"
+  dbactividades:
+    build:
+      context: ./dbs
+      dockerfile: dbactividades.dockerfile
+    volumes:
+      - ./dbs/base_actividades:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: actividades
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33002:3306"
+  dbusuarios:
+    build: 
+      context: ./dbs
+      dockerfile: dbusuarios.dockerfile
+    volumes:
+      - ./dbs/base_usuarios:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuarios
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33003:3306"
+  dbadmins:
+    build:
+      context: ./dbs
+      dockerfile: dbadmins.dockerfile
+    volumes:
+      - ./dbs/base_admins:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: admins
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33004:3306"
+
