@@ -1,9 +1,10 @@
+server:
+  port: 8095
+
 spring:
   application:
     name: reporte-microservice
   cloud:
-    config:
-      uri: http://localhost:8888
     discovery:
       enabled: true
     feign:
@@ -24,8 +25,8 @@ spring:
     console:
       enabled: true
       path: /h2-console
-server:
-  port: 8095
+  config:
+    import: configserver:http://localhost:8888
 
 eureka:
   client:
