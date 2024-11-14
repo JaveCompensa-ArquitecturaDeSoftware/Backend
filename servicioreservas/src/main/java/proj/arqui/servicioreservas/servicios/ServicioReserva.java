@@ -1,8 +1,8 @@
 package proj.arqui.servicioreservas.servicios;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import proj.arqui.servicioreservas.repositorios.RepositorioReserva;
 
 
 @Service
-public class ServicioUsuario {
+public class ServicioReserva {
     
 
     @Autowired
@@ -23,10 +23,12 @@ public class ServicioUsuario {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Iterable<ReservaDTO> obtenerTodasReservas() {
-        Iterable<Reserva> reservas = repositorioReserva.findAll();
-        return reservas.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
+public Iterable<ReservaDTO> obtenerTodasReservas() {
+    Iterable<Reserva> reservas = repositorioReserva.findAll();
+    return StreamSupport.stream(reservas.spliterator(), false)
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList());
+}
 
     public Optional<ReservaDTO> obtenerReservaPorId(Long id) {
         Optional<Reserva> reserva = repositorioReserva.findById(id);
