@@ -8,7 +8,8 @@
             "mainClass": "co.edu.javeriana.msc.turismo.gateway_server.GatewayServerApplication",
             "projectName": "gateway_server",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=59403 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gateway_server"
         },
         {
             "type": "java",
@@ -18,7 +19,8 @@
             "mainClass": "proj.arqui.configserver.ConfigserverApplication",
             "projectName": "configserver",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
         },
         {
             "type": "java",
@@ -27,6 +29,67 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "proj.arqui.eureka.EurekaApplication",
             "projectName": "eureka",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=59400 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=eureka"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServicioactividadApplication<servicioactividad>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proj.arqui.servicioactividad.ServicioactividadApplication",
+            "projectName": "servicioactividad",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServicioadminApplication<servicioadmin>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proj.arqui.servicioadmin.ServicioadminApplication",
+            "projectName": "servicioadmin",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServicioeventosApplication<servicioeventos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proj.arqui.servicioeventos.ServicioeventosApplication",
+            "projectName": "servicioeventos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServiciosedesApplication<serviciosedes>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proj.arqui.serviciosedes.ServiciosedesApplication",
+            "projectName": "serviciosedes",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServiciousuarioApplication<serviciousuario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proj.arqui.serviciousuario.ServiciousuarioApplication",
+            "projectName": "serviciousuario",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ReporteMicroserviceApplication<reporte-microservice>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.javecompensa.reporte_microservice.ReporteMicroserviceApplication",
+            "projectName": "reporte-microservice",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
