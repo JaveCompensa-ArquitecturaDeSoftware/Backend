@@ -2,4 +2,4 @@ spring:
     application:
         name: servicioreservas
     config:
-        import: configserver:http://localhost:8086
+        import: configserver:http://localhost:8888

@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ServiciousuarioApplication",
+            "request": "launch",
+            "mainClass": "proj.arqui.serviciousuario.ServiciousuarioApplication",
+            "projectName": "serviciousuario"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-GatewayServerApplication<gateway_server>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
