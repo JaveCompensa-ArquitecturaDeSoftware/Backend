@@ -6,7 +6,8 @@ import java.util.stream.StreamSupport;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import proj.arqui.servicioreservas.dto.ReservaDTO;
+
+import proj.arqui.servicioreservas.dtos.ReservaDTO;
 import proj.arqui.servicioreservas.entidades.Reserva;
 import proj.arqui.servicioreservas.repositorios.RepositorioReserva;
 import java.sql.Timestamp;
@@ -82,12 +83,15 @@ public class ServicioReserva {
     }
 
     private boolean hasTimeConflict(Reserva existingReserva, Reserva newReserva) {
-        Timestamp existingStart = existingReserva.getFechaCreacion();
+        // Convert Date to Timestamp
+        Timestamp existingStart = new Timestamp(existingReserva.getFechaCreacion().getTime());
         Timestamp existingEnd = new Timestamp(existingStart.getTime() + (long) (existingReserva.getDuracionReserva() * 3600000));
-
-        Timestamp newStart = newReserva.getFechaCreacion();
+    
+        Timestamp newStart = new Timestamp(newReserva.getFechaCreacion().getTime());
         Timestamp newEnd = new Timestamp(newStart.getTime() + (long) (newReserva.getDuracionReserva() * 3600000));
-
+    
+        // Check for time conflict
         return newStart.before(existingEnd) && newEnd.after(existingStart);
     }
+    
 }
