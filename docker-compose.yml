@@ -12,56 +12,133 @@ services:
       MYSQL_PASSWORD: Admin
     ports:
       - "33000:3306"
-  dbeventos:
+
+  eureka:
     build:
-      context: ./dbs
-      dockerfile: dbeventos.dockerfile
-    volumes:
-      - ./dbs/base_eventos:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: eventos
-      MYSQL_USER: Admin
-      MYSQL_PASSWORD: Admin
+      context: ./eureka
+      dockerfile: eureka.dockerfile
+    container_name: eureka
+    hostname: eureka
     ports:
-      - "33001:3306"
-  dbactividades:
+      - "8761:8761"
+    networks:
+      my-network:
+        aliases:
+          - eureka
+
+  configserver:
     build:
-      context: ./dbs
-      dockerfile: dbactividades.dockerfile
-    volumes:
-      - ./dbs/base_actividades:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: actividades
-      MYSQL_USER: Admin
-      MYSQL_PASSWORD: Admin
+      context: ./configserver
+      dockerfile: config.dockerfile
+    container_name: configserver
+    hostname: configserver
+    depends_on:
+      - eureka
     ports:
-      - "33002:3306"
-  dbusuarios:
-    build: 
-      context: ./dbs
-      dockerfile: dbusuarios.dockerfile
-    volumes:
-      - ./dbs/base_usuarios:/var/lib/mysql
+      - "8888:8888"
+    networks:
+      my-network:
+        aliases:
+          - configserver
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: usuarios
-      MYSQL_USER: Admin
-      MYSQL_PASSWORD: Admin
-    ports:
-      - "33003:3306"
-  dbadmins:
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+  
+  servicioactividad:
     build:
-      context: ./dbs
-      dockerfile: dbadmins.dockerfile
-    volumes:
-      - ./dbs/base_admins:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: admins
-      MYSQL_USER: Admin
-      MYSQL_PASSWORD: Admin
+      context: ./servicioactividad
+      dockerfile: actividad.dockerfile
+    container_name: servicioactividad
+    hostname: servicioactividad
+    depends_on:
+      - eureka
+      - configserver
     ports:
-      - "33004:3306"
+      - "8084:8080"
+    networks:
+      my-network:
+        aliases:
+          - servicioactividad
+    environment:
+      CONFIG_SERVER_URL: http://configserver:8888
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+  
+  servicioadmin:
+    build:
+      context: ./servicioadmin
+      dockerfile: admin.dockerfile
+    container_name: servicioadmin
+    hostname: servicioadmin
+    depends_on:
+      - eureka
+      - configserver
+    ports:
+      - "8083:8080"
+    networks:
+      my-network:
+        aliases:
+          - servicioadmin
+    environment:
+      CONFIG_SERVER_URL: http://configserver:8888
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+  
+  servicioeventos:
+    build:
+      context: ./servicioeventos
+      dockerfile: evento.dockerfile
+    container_name: servicioeventos
+    hostname: servicioeventos
+    depends_on:
+      - eureka
+      - configserver
+    ports:
+      - "8082:8080"
+    networks:
+      my-network:
+        aliases:
+          - servicioeventos
+    environment:
+      CONFIG_SERVER_URL: http://configserver:8888
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+  
+  serviciosedes:
+    build:
+      context: ./serviciosedes
+      dockerfile: sedes.dockerfile
+    container_name: serviciosedes
+    hostname: serviciosedes
+    depends_on:
+      - eureka
+      - configserver
+    ports:
+      - "8085:8080"
+    networks:
+      my-network:
+        aliases:
+          - serviciosedes
+    environment:
+      CONFIG_SERVER_URL: http://configserver:8888
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+  
+  serviciousuario:
+    build:
+      context: ./serviciousuario
+      dockerfile: usuario.dockerfile
+    container_name: serviciousuario
+    hostname: serviciousuario
+    depends_on:
+      - eureka
+      - configserver
+    ports:
+      - "8081:8080"
+    networks:
+      my-network:
+        aliases:
+          - serviciousuario
+    environment:
+      CONFIG_SERVER_URL: http://configserver:8888
+      EUREKA_SERVER_URL: http://eureka:8761/eureka/
+    
+
+networks:
+  my-network:
 
