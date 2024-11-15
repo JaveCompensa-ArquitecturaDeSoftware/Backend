@@ -1,17 +1,98 @@
 services:
-  dbsedes:
-    build:
-      context: ./dbs
-      dockerfile: dbsedes.dockerfile
+  dbactividad:
+    image: mysql
+    restart: always
     volumes:
-      - ./dbs/base_sedes:/var/lib/mysql
+      - ./dbs/base_actividad:/var/lib/mysql
+    container_name: dbactividad
+    hostname: dbactividad
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sedes
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: actividad
       MYSQL_USER: Admin
       MYSQL_PASSWORD: Admin
     ports:
       - "33000:3306"
+    networks:
+      my-network:
+        aliases:
+          - dbactividad
+  
+  dbsedes:
+    image: mysql
+    restart: always
+    volumes:
+      - ./dbs/base_sedes:/var/lib/mysql
+    container_name: dbsedes
+    hostname: dbsedes
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: sedes
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33001:3306"
+    networks:
+      my-network:
+        aliases:
+          - dbsedes
+  
+  dbeventos:
+    image: mysql
+    restart: always
+    volumes:
+      - ./dbs/base_eventos:/var/lib/mysql
+    container_name: dbeventos
+    hostname: dbeventos
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: eventos
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33002:3306"
+    networks:
+      my-network:
+        aliases:
+          - dbeventos
+  
+  dbadmin:
+    image: mysql
+    restart: always
+    volumes:
+      - ./dbs/base_admin:/var/lib/mysql
+    container_name: dbadmin
+    hostname: dbadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: admin
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33003:3306"
+    networks:
+      my-network:
+        aliases:
+          - dbadmin
+  
+  dbusuario:
+    image: mysql
+    restart: always
+    volumes:
+      - ./dbs/base_usuario:/var/lib/mysql
+    container_name: dbusuario
+    hostname: dbusuario
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: usuario
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Admin
+    ports:
+      - "33004:3306"
+    networks:
+      my-network:
+        aliases:
+          - dbusuario
 
   eureka:
     build:
@@ -61,6 +142,10 @@ services:
     environment:
       CONFIG_SERVER_URL: http://configserver:8888
       EUREKA_SERVER_URL: http://eureka:8761/eureka/
+      DB_URL: dbactividad:3306
+      DB_NOMBRE: actividad
+      DB_USUARIO: Admin
+      DB_CONTRASENA: Admin
   
   servicioadmin:
     build:
@@ -80,6 +165,10 @@ services:
     environment:
       CONFIG_SERVER_URL: http://configserver:8888
       EUREKA_SERVER_URL: http://eureka:8761/eureka/
+      DB_URL: dbadmin:3306
+      DB_NOMBRE: admin
+      DB_USUARIO: Admin
+      DB_CONTRASENA: Admin
   
   servicioeventos:
     build:
@@ -99,6 +188,10 @@ services:
     environment:
       CONFIG_SERVER_URL: http://configserver:8888
       EUREKA_SERVER_URL: http://eureka:8761/eureka/
+      DB_URL: dbeventos:3306
+      DB_NOMBRE: eventos
+      DB_USUARIO: Admin
+      DB_CONTRASENA: Admin
   
   serviciosedes:
     build:
@@ -118,6 +211,10 @@ services:
     environment:
       CONFIG_SERVER_URL: http://configserver:8888
       EUREKA_SERVER_URL: http://eureka:8761/eureka/
+      DB_URL: dbsedes:3306
+      DB_NOMBRE: sedes
+      DB_USUARIO: Admin
+      DB_CONTRASENA: Admin
   
   serviciousuario:
     build:
@@ -137,6 +234,10 @@ services:
     environment:
       CONFIG_SERVER_URL: http://configserver:8888
       EUREKA_SERVER_URL: http://eureka:8761/eureka/
+      DB_URL: dbusuario:3306
+      DB_NOMBRE: usuario
+      DB_USUARIO: Admin
+      DB_CONTRASENA: Admin
     
 
 networks:
