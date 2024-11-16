@@ -26,10 +26,9 @@ public class SecurityConfig {
                         .permitAll()
 
                         // Allow access to simple microservice to certain roles
-                        //TODO poner rutas a microservicios
-                        .pathMatchers("/servicioactividad/**")
+                        .pathMatchers("/servicioactividad/**","/servicioadmin/**","/servicioeventos/**","/serviciousuarios/**")
                         .permitAll()
-                        
+
                         // For any other request, the user must be authenticated
                         .anyExchange().authenticated())
                 // Configures JWT to properly process Keycloak tokens
