@@ -27,6 +27,8 @@ public class SecurityConfig {
 
                         // Allow access to simple microservice to certain roles
                         //TODO poner rutas a microservicios
+                        .pathMatchers("/servicioactividad/**")
+                        .permitAll()
                         
                         // For any other request, the user must be authenticated
                         .anyExchange().authenticated())
